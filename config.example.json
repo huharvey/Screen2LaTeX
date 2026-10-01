@@ -1,0 +1,12 @@
+{
+  "unimernet_root": "E:/Tools/UniMERNet",
+  "unimernet_config": "configs/demo.yaml",
+  "model_dir": "models/unimernet_small",
+  "checkpoint": "models/unimernet_small/unimernet_small.pth",
+  "device": "auto",
+  "server": {
+    "host": "127.0.0.1",
+    "port": 8765,
+    "request_timeout_seconds": 60
+  }
+}
