@@ -33,6 +33,10 @@ Windows 剪贴板
 - client / server 分离，Quicker 只需等待轻量 client 返回。
 - 支持 Windows 登录后静默启动后台 server。
 
+## Demo
+
+![Screen2LaTeX demo](assets/demo.gif)
+
 ## 依赖
 
 - Windows 10 / 11
