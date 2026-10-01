@@ -1,23 +1,40 @@
-import urllib.request
 import sys
+import urllib.error
+import urllib.request
 
-URL = "http://127.0.0.1:8765/ocr"
+from settings import load_settings
 
-try:
-    request = urllib.request.Request(
-        URL,
-        data=b"ocr",
-        method="POST"
-    )
 
-    with urllib.request.urlopen(request, timeout=60) as response:
-        result = response.read().decode("utf-8")
+def main():
+    settings = load_settings()
+    host = settings["server_host"]
+    port = settings["server_port"]
+    timeout = settings["request_timeout_seconds"]
 
-    if result != "OK":
-        raise RuntimeError(result)
+    url = f"http://{host}:{port}/ocr"
 
-except Exception as e:
-    print(f"公式识别失败：{e}")
-    sys.exit(1)
+    try:
+        request = urllib.request.Request(
+            url,
+            data=b"ocr",
+            method="POST",
+        )
 
-sys.exit(0)
+        with urllib.request.urlopen(request, timeout=timeout) as response:
+            result = response.read().decode("utf-8")
+
+        if result != "OK":
+            raise RuntimeError(result)
+
+    except urllib.error.URLError as exc:
+        print(f"公式识别失败：无法连接本地服务：{exc}")
+        return 1
+    except Exception as exc:
+        print(f"公式识别失败：{exc}")
+        return 1
+
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
